@@ -70,6 +70,12 @@ Commits the currently staged files (those added via `vcs add`) with the provided
 
 ---
 
+### `vcs restore <filename>`
+Restores file from the latest commit (undoes local changes).
+
+> Example:
+> `vcs restore textfile.txt`
+
 ### `vcs status`
 Displays the working directory state:
 - Changes staged for commit

@@ -1,7 +1,6 @@
 #include "checkout.hpp"
 #include "utils.hpp"
 #include <iostream>
-#include <string>
 #include <filesystem>
 #include <fstream>
 #include <sstream>

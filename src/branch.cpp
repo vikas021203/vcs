@@ -1,6 +1,5 @@
 #include "branch.hpp"
 #include "utils.hpp"
-#include <string>
 #include <fstream>
 #include <iostream>
 #include <filesystem>

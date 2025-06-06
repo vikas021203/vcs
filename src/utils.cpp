@@ -3,7 +3,6 @@
 #include <sstream>
 #include <filesystem>
 #include <openssl/sha.h>
-#include <unordered_map>
 #include <iostream>
 
 namespace fs = std::filesystem;
