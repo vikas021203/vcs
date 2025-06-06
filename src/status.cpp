@@ -42,8 +42,6 @@ void vcs_status() {
             if(relPath.find(".vcs", 0) != std::string::npos) continue;
             if(is_ignored(relPath, ignored_patterns)) continue;
 
-            std::cout << relPath << "\n";
-
             std::string hash = hash_file(entry.path().string());
             current[relPath] = hash;
         }
