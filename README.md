@@ -105,7 +105,7 @@ Shows a list of commits made in the current branch.
 
 ---
 
-## Ignore Files 
+## 🗂 Ignore Files 
 
 This VCS supports `.vcsignore`, similar to `.gitignore`.
 - Add paths to .vcsignore (one per line) to exclude files/folders from being tracked.
