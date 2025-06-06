@@ -94,3 +94,43 @@ std::unordered_map<std::string, std::string> load_tree_recursive(const std::stri
     }
     return tree;
 }
+
+std::vector<std::tuple<std::regex, bool, std::string>> load_ignore_patterns() {
+    std::vector<std::tuple<std::regex, bool, std::string>> patterns;
+    std::ifstream ignoreFile(".vcsignore");
+    std::string line;
+    while (std::getline(ignoreFile, line))
+    {
+        if(!line.empty() && line[0] != '#') {
+            bool isNegated = false;
+            if(line[0] == '!') {
+                isNegated = true;
+                line = line.substr(1);
+            }
+            std::string pattern = std::regex_replace(line, std::regex(R"(\.)"), R"(\.)");
+            pattern = std::regex_replace(pattern, std::regex(R"(\*\*/?)"), R"((.*/)?))");
+            pattern = std::regex_replace(pattern, std::regex(R"(\*)"), R"([^/]*)");
+            if(!pattern.empty() && pattern.back() == '/') pattern += ".*";
+
+            if(line.front() == '/') {
+                pattern = "^" + pattern;
+            } else {
+                pattern = "(^|.*/)" + pattern;
+            }
+
+            patterns.push_back({std::regex(pattern), isNegated, pattern});
+        }
+    }
+    return patterns;
+}
+
+bool is_ignored(const std::string& relPath, const std::vector<std::tuple<std::regex, bool, std::string>>& ignore_patterns) {
+    std::string normalized = relPath;
+    std::replace(normalized.begin(), normalized.end(), '\\', '/');
+    for (const auto& pattern : ignore_patterns) {
+        if(std::regex_match(normalized, std::get<0>(pattern))) {
+            return !std::get<1>(pattern);
+        }
+    }
+    return false;
+}

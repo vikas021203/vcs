@@ -12,6 +12,7 @@ namespace fs = std::filesystem;
 void vcs_status() {
     if(!ensure_vcs_initialized()) return;
 
+    auto ignored_patterns = load_ignore_patterns();
     auto index = load_index();
     std::unordered_map<std::string, std::string> current;
     std::ifstream headFile(".vcs/HEAD");
@@ -39,6 +40,9 @@ void vcs_status() {
             std::string relPath = fs::relative(entry.path(), fs::current_path()).string();
 
             if(relPath.find(".vcs", 0) != std::string::npos) continue;
+            if(is_ignored(relPath, ignored_patterns)) continue;
+
+            std::cout << relPath << "\n";
 
             std::string hash = hash_file(entry.path().string());
             current[relPath] = hash;

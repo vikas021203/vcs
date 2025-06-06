@@ -9,7 +9,8 @@ namespace fs = std::filesystem;
 void vcs_add(const std::vector<std::string>& paths) {
     if(!ensure_vcs_initialized()) return;
 
-    std::unordered_map<std::string, std::string> index = load_index();
+    auto index = load_index();
+    auto ignore_patterns = load_ignore_patterns();
 
     for(const auto& path_str : paths) {
         fs::path path = fs::path(path_str);
@@ -24,6 +25,7 @@ void vcs_add(const std::vector<std::string>& paths) {
             std::string relPath = fs::relative(path, fs::current_path()).string();
             std::string hash = hash_file(path.string());
 
+            if(is_ignored(relPath, ignore_patterns)) continue;
             if(index.find(relPath) != index.end() && index[relPath] == hash) continue;
 
             std::string blob_path = ".vcs/objects/" + hash;
@@ -42,6 +44,7 @@ void vcs_add(const std::vector<std::string>& paths) {
                 std::string relPath = fs::relative(entry.path(), fs::current_path()).string();
                 std::string hash = hash_file(entry.path().string());
 
+                if(is_ignored(relPath, ignore_patterns)) continue;
                 if(index.find(relPath) != index.end() && index[relPath] == hash) continue;
 
                 std::string blob_path = ".vcs/objects/" + hash;

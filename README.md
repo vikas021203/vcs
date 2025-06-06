@@ -49,7 +49,7 @@ Initializes a new repository by creating the internal `.vcs/` directory.
 ### `vcs add <files or directories>`
 Adds one or more files/folders to the index (i.e., staging area) to track changes.
 
-> Example:  
+> Example:
 > `vcs add file.txt src/`
 
 ---
@@ -57,7 +57,7 @@ Adds one or more files/folders to the index (i.e., staging area) to track change
 ### `vcs rm <files>`
 Removes one or more files from the index (stops tracking them).
 
-> Example:  
+> Example:
 > `vcs rm old_config.txt`
 
 ---
@@ -65,7 +65,7 @@ Removes one or more files from the index (stops tracking them).
 ### `vcs commit <message>`
 Commits the currently staged files (those added via `vcs add`) with the provided commit message.
 
-> Example:  
+> Example:
 > `vcs commit "Implemented login logic"`
 
 ---
@@ -87,7 +87,7 @@ Displays the working directory state:
 ### `vcs branch <branch-name>`
 Creates a new branch from the current commit.
 
-> Example:  
+> Example:
 > `vcs branch feature`
 
 ---
@@ -95,7 +95,7 @@ Creates a new branch from the current commit.
 ### `vcs checkout <branch-name>`
 Switches to the specified branch and updates the working directory accordingly.
 
-> Example:  
+> Example:
 > `vcs checkout master`
 
 ---
@@ -104,3 +104,15 @@ Switches to the specified branch and updates the working directory accordingly.
 Shows a list of commits made in the current branch.
 
 ---
+
+## Ignore Files 
+
+This VCS supports `.vcsignore`, similar to `.gitignore`.
+- Add paths to .vcsignore (one per line) to exclude files/folders from being tracked.
+
+Example:
+```
+!keep_text.txt # Negations must always be at the top 
+build/
+*.cpp
+```
